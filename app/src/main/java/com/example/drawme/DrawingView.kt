@@ -8,15 +8,15 @@ import android.view.View
 class DrawingView(context: Context, attr: AttributeSet): View(context, attr) {
 
     private var mDrawPath : CustomPath? = null
-    private var mCanvasBitmap: Bitmap? = null
-    private var mDrawPaint: Paint? = null
+    private var mCanvasBitmap: Bitmap? = null // An instance of the bitmap
+    private var mDrawPaint: Paint? = null // The paint class
     private var mCanvasPaint: Paint? = null
-    private var mBrushSize: Float = 0.toFloat()
+    private var mBrushSize: Float = 0.toFloat() // A variable for stroke/brush size to draw on the canvas.
     private var color = Color.BLACK
     private var canvas: Canvas? = null
 
     init {
-        setUpDrawing()
+        setUpDrawing() //code inside init will be
     }
 
     private fun setUpDrawing() {
