@@ -31,7 +31,7 @@ class DrawingView(context: Context, attr: AttributeSet): View(context, attr) {
         mBrushSize = 20.toFloat()
     }
 
-    override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
+    override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) { //Called when the size of this view has changed.
         super.onSizeChanged(w, h, oldw, oldh)
         mCanvasBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888)//bitmap configuration
         canvas = Canvas(mCanvasBitmap!!) // set canvas as mCanvasBitmap
@@ -42,7 +42,7 @@ class DrawingView(context: Context, attr: AttributeSet): View(context, attr) {
         super.onDraw(canvas)
         canvas.drawBitmap(mCanvasBitmap!!, 0f, 0f,mCanvasPaint)
 
-            if(!mDrawPath!!.isEmpty) {
+            if(!mDrawPath!!.isEmpty) { //mDrawPath is nullable and empty
                 mDrawPaint!!.strokeWidth = mDrawPath!!.brushThickness //set the brush thickness
                 mDrawPaint!!.color = mDrawPath!!.color //set the color
                 canvas.drawPath(mDrawPath!!, mDrawPaint!!)
@@ -52,14 +52,31 @@ class DrawingView(context: Context, attr: AttributeSet): View(context, attr) {
 
     override fun onTouchEvent(event: MotionEvent?): Boolean { //what happen when we touch
 
-        val touchx = event?.x
-        val touchy = event?.y
+        val touchx = event?.x //for the x axis
+        val touchy = event?.y //for the y axis
 
         when (event?.action){
+            MotionEvent.ACTION_DOWN ->{ //when we start touching the screen
+                mDrawPath!!.color = color
+                mDrawPath!!.brushThickness = mBrushSize
 
+                mDrawPath!!.reset()
+                mDrawPath!!.moveTo(touchx!!,touchy!!)
+
+
+            }
+            MotionEvent.ACTION_MOVE ->{ //when we drag on the screen
+                mDrawPath!!.lineTo(touchx!!, touchy!!)
+            }
+            MotionEvent.ACTION_UP ->{ // when we stop touching the screen or pressure gesture is finished
+
+            }
+
+        else -> return false // in none of the above is true
         }
+         invalidate() //Invalidate the whole view.
 
-        return super.onTouchEvent(event)
+        return true
     }
 
     internal inner class CustomPath(var color: Int, var brushThickness: Float) : Path(){
