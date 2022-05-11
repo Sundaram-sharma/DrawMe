@@ -15,6 +15,7 @@ class DrawingView(context: Context, attr: AttributeSet): View(context, attr) {
     private var mBrushSize: Float = 0.toFloat() // A variable for stroke/brush size to draw on the canvas.
     private var color = Color.BLACK
     private var canvas: Canvas? = null
+    private val mPath = ArrayList<CustomPath>() // to retain the path we draw
 
     init {
         setUpDrawing() //code inside init will be
@@ -42,6 +43,12 @@ class DrawingView(context: Context, attr: AttributeSet): View(context, attr) {
         super.onDraw(canvas)
         canvas.drawBitmap(mCanvasBitmap!!, 0f, 0f,mCanvasPaint)
 
+        for(path in mPath){
+            mDrawPaint!!.strokeWidth = path.brushThickness
+            mDrawPaint!!.color = path.color
+            canvas.drawPath(path, mDrawPaint!!)
+        }
+
             if(!mDrawPath!!.isEmpty) { //mDrawPath is nullable and empty
                 mDrawPaint!!.strokeWidth = mDrawPath!!.brushThickness //set the brush thickness
                 mDrawPaint!!.color = mDrawPath!!.color //set the color
@@ -55,7 +62,7 @@ class DrawingView(context: Context, attr: AttributeSet): View(context, attr) {
         val touchx = event?.x //for the x axis
         val touchy = event?.y //for the y axis
 
-        when (event?.action){
+        when (event?.action){ // '!!' for nullable
             MotionEvent.ACTION_DOWN ->{ //when we start touching the screen
                 mDrawPath!!.color = color
                 mDrawPath!!.brushThickness = mBrushSize
@@ -69,7 +76,8 @@ class DrawingView(context: Context, attr: AttributeSet): View(context, attr) {
                 mDrawPath!!.lineTo(touchx!!, touchy!!)
             }
             MotionEvent.ACTION_UP ->{ // when we stop touching the screen or pressure gesture is finished
-
+                mPath.add(mDrawPath!!) //
+                mDrawPath = CustomPath(color, mBrushSize)
             }
 
         else -> return false // in none of the above is true
