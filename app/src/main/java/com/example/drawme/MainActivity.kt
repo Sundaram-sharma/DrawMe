@@ -1,5 +1,6 @@
 package com.example.drawme
 
+import android.app.Dialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 
@@ -13,4 +14,12 @@ class MainActivity : AppCompatActivity() {
         drawingView = findViewById(R.id.drawing_view)
         drawingView?.setSizeForBrush(20.toFloat())
     }
+    private fun showBrushSizeChooserDialog(){ //
+        val brushDialog = Dialog(this)
+        brushDialog.setContentView(R.layout.dialog_brush_size)
+        brushDialog.setTitle("Brush Size: ")
+        val smallBtn = brushDialog
+    }
+
+
 }
