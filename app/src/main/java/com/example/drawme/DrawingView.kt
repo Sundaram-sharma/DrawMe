@@ -22,6 +22,10 @@ class DrawingView(context: Context, attr: AttributeSet): View(context, attr) {
         setUpDrawing() //code inside init will be
     }
 
+    /**
+     * This method initializes the attributes of the
+     * ViewForDrawing class.
+     */
     private fun setUpDrawing() {
         mDrawPaint = Paint()
         mDrawPath = CustomPath(color,mBrushSize)
@@ -42,8 +46,24 @@ class DrawingView(context: Context, attr: AttributeSet): View(context, attr) {
 
     }
         // Canvas? to canvas if fails
+    /**
+     * This method is called when a stroke is drawn on the canvas
+     * as a part of the painting.
+     */
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
+        /**
+         * Draw the specified bitmap, with its top/left corner at (x,y), using the specified paint,
+         * transformed by the current matrix.
+         *
+         *If the bitmap and canvas have different densities, this function will take care of
+         * automatically scaling the bitmap to draw at the same density as the canvas.
+         *
+         * @param bitmap The bitmap to be drawn
+         * @param left The position of the left side of the bitmap being drawn
+         * @param top The position of the top side of the bitmap being drawn
+         * @param paint The paint used to draw the bitmap (may be null)
+         */
         canvas.drawBitmap(mCanvasBitmap!!, 0f, 0f,mCanvasPaint)
 
         for(path in mPath){ //
@@ -62,15 +82,15 @@ class DrawingView(context: Context, attr: AttributeSet): View(context, attr) {
 
     override fun onTouchEvent(event: MotionEvent?): Boolean { //what happen when we touch
 
-        val touchx = event?.x //for the x axis
-        val touchy = event?.y //for the y axis
+        val touchx = event?.x //touch event for the x coordinate
+        val touchy = event?.y //touch event for the y coordinate
 
         when (event?.action){ // '!!' for nullable
             MotionEvent.ACTION_DOWN ->{ //when we start touching the screen
                 mDrawPath!!.color = color
                 mDrawPath!!.brushThickness = mBrushSize
 
-                mDrawPath!!.reset()
+                mDrawPath!!.reset()  // Clear any lines and curves from the path, making it empty.
                 mDrawPath!!.moveTo(touchx!!,touchy!!)
 
 
@@ -89,6 +109,12 @@ class DrawingView(context: Context, attr: AttributeSet): View(context, attr) {
 
         return true
     }
+
+    /**
+     * This method is called when either the brush or the eraser
+     * sizes are to be changed. This method sets the brush/eraser
+     * sizes to the new values depending on user selection.
+     */
 
     fun setSizeForBrush(newSize: Float){ //this function will set the size for the brush
         mBrushSize =  TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, newSize, resources.displayMetrics)
