@@ -14,6 +14,9 @@ class MainActivity : AppCompatActivity() {
         drawingView = findViewById(R.id.drawing_view)
         drawingView?.setSizeForBrush(20.toFloat())
     }
+    /**
+     * Method is used to launch the dialog to select different brush sizes.
+     */
     private fun showBrushSizeChooserDialog(){ //
         val brushDialog = Dialog(this)
         brushDialog.setContentView(R.layout.dialog_brush_size)
