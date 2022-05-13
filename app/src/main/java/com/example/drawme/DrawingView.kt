@@ -21,7 +21,6 @@ class DrawingView(context: Context, attr: AttributeSet): View(context, attr) {
     init {
         setUpDrawing() //code inside init will be
     }
-
     /**
      * This method initializes the attributes of the
      * ViewForDrawing class.

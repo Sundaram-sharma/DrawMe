@@ -3,6 +3,7 @@ package com.example.drawme
 import android.app.Dialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.ImageButton
 
 class MainActivity : AppCompatActivity() {
 
@@ -21,7 +22,11 @@ class MainActivity : AppCompatActivity() {
         val brushDialog = Dialog(this)
         brushDialog.setContentView(R.layout.dialog_brush_size)
         brushDialog.setTitle("Brush Size: ")
-        val smallBtn = brushDialog
+        val smallBtn: ImageButton = brushDialog.findViewById(R.id.ib_small_brush)
+        smallBtn.setOnClickListener {
+            drawingView?.setSizeForBrush(10.toFloat())//creating the button that will call the
+            brushDialog.dismiss() // close the dialog
+        }
     }
 
 
