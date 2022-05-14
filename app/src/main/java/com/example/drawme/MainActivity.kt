@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
     fun paintClicked(view: View) {
             if(view !== mImageButtonCurrentPaint){
                 val imageButton = view as ImageButton
-                val colorTag = imageButton.tag.toString() //assinging the strings from color.xml to colorTag variable
+                val colorTag = imageButton.tag.toString() // assigning the strings from color.xml to colorTag variable
                 drawingView?.setColor(colorTag) //passing colorTag as a parameter to select color from drawingView
 
                 imageButton.setImageDrawable(// making the current button pressed
