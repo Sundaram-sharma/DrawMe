@@ -47,6 +47,7 @@
             android:src="@drawable/pallet_normal"
             android:tag="@color/yellow"
             android:background="@color/yellow"
+            android:onClick="paintClicked"
             />
         <ImageButton
 
@@ -56,6 +57,7 @@
             android:src="@drawable/pallet_normal"
             android:tag="@color/red"
             android:background="@color/red"
+            android:onClick="paintClicked"
             />
         <ImageButton
 
@@ -65,6 +67,7 @@
             android:src="@drawable/pallet_normal"
             android:tag="@color/skin"
             android:background="@color/skin"
+            android:onClick="paintClicked"
             />
         <ImageButton
 
@@ -74,6 +77,7 @@
             android:src="@drawable/pallet_normal"
             android:tag="@color/green"
             android:background="@color/green"
+            android:onClick="paintClicked"
             />
         <ImageButton
 
@@ -83,6 +87,7 @@
             android:src="@drawable/pallet_normal"
             android:tag="@color/blue"
             android:background="@color/blue"
+            android:onClick="paintClicked"
             />
         <ImageButton
 
@@ -92,6 +97,7 @@
             android:src="@drawable/pallet_normal"
             android:tag="@color/lollipop"
             android:background="@color/lollipop"
+            android:onClick="paintClicked"
             />
         <ImageButton
 
@@ -101,6 +107,7 @@
             android:src="@drawable/pallet_normal"
             android:tag="@color/random"
             android:background="@color/random"
+            android:onClick="paintClicked"
             />
         <ImageButton
 
@@ -110,6 +117,7 @@
         android:src="@drawable/pallet_normal"
         android:tag="@color/black"
         android:background="@color/black"
+            android:onClick="paintClicked"
         />
 
     </LinearLayout>

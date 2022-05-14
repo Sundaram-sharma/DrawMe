@@ -3,9 +3,11 @@ package com.example.drawme
 import android.app.Dialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.get
 
@@ -32,6 +34,25 @@ class MainActivity : AppCompatActivity() {
             showBrushSizeChooserDialog()
         }
     }
+
+    fun paintClicked(view: View) {
+            if(view !== mImageButtonCurrentPaint){
+                val imageButton = view as ImageButton
+                val colorTag = imageButton.tag.toString() //assinging the strings from color.xml to colorTag variable
+                drawingView?.setColor(colorTag) //passing colorTag as a parameter to select color from drawingView
+
+                imageButton.setImageDrawable(// making the current button pressed
+                    ContextCompat.getDrawable(this,R.drawable.pallet_pressed)
+                )
+
+                mImageButtonCurrentPaint?.setImageDrawable(//making the unselected button normal
+                    ContextCompat.getDrawable(this,R.drawable.pallet_normal)
+                )
+                mImageButtonCurrentPaint = view //making current
+            }
+    }
+
+
     /**
      * Method is used to launch the dialog to select different brush sizes.
      */

@@ -6,15 +6,16 @@ import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.MotionEvent
 import android.view.View
+import android.widget.Toast
 
 class DrawingView(context: Context, attr: AttributeSet): View(context, attr) {
 
-    private var mDrawPath : CustomPath? = null
+    private var mDrawPath : CustomPath? = null // An variable of CustomPath inner class to use it further.
     private var mCanvasBitmap: Bitmap? = null // An instance of the bitmap
-    private var mDrawPaint: Paint? = null // The paint class
-    private var mCanvasPaint: Paint? = null
+    private var mDrawPaint: Paint? = null // The Paint class holds the style and color information about how to draw geometries, text and bitmaps.
+    private var mCanvasPaint: Paint? = null // Instance of canvas paint view.
     private var mBrushSize: Float = 0.toFloat() // A variable for stroke/brush size to draw on the canvas.
-    private var color = Color.BLACK
+    private var color = Color.BLACK // A variable to hold a color of the stroke.
     private var canvas: Canvas? = null
     private val mPath = ArrayList<CustomPath>() // to retain the path we draw
 
@@ -120,7 +121,19 @@ class DrawingView(context: Context, attr: AttributeSet): View(context, attr) {
         mDrawPaint!!.strokeWidth = mBrushSize // it will retain the brush size according to the needs
     }
 
+    fun setColor(newColor: String){
+        color = Color.parseColor(newColor) //will take the color.xml value and treat them as strings
+        mDrawPaint!!.color = color //set the selected color
+    }
+
+    /**
+     * This method initializes the attributes of the
+     * ViewForDrawing class.
+     */
+
+
     internal inner class CustomPath(var color: Int, var brushThickness: Float) : Path(){
+
 
 
 
