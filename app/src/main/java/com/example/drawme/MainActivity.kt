@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity() {
                     ContextCompat.getDrawable(this,R.drawable.pallet_pressed)
                 )
 
-                mImageButtonCurrentPaint?.setImageDrawable(//making the unselected button normal
+                mImageButtonCurrentPaint?.setImageDrawable(// making the unselected button normal
                     ContextCompat.getDrawable(this,R.drawable.pallet_normal)
                 )
                 mImageButtonCurrentPaint = view // making current
