@@ -131,6 +131,7 @@ class DrawingView(context: Context, attr: AttributeSet): View(context, attr) {
             }
             MotionEvent.ACTION_UP ->{ // when we stop touching the screen or pressure gesture is finished
                 mPaths.add(mDrawPath!!) // this will start the drawing
+                mUndoPaths.clear() //clear all the undo paths
                 mDrawPath = CustomPath(color, mBrushSize)
             }
 
