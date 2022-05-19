@@ -50,16 +50,20 @@ class MainActivity : AppCompatActivity() {
                 val permissionName = it.key //this will be of type string
                 val isGranted = it.value// this will be of type bool
 
-                //Todo : if permission is granted show a toast and perform operation
+                //if permission is granted show a toast and perform operation
 
                 if(isGranted){ //if the permission is granted
                     Toast.makeText(this@MainActivity," Permission granted, now you can read from file storage.", Toast.LENGTH_LONG).show()
 
+                    //perform operation
+                    //create an intent to pick image from external storage
 
                     val pickIntent = Intent(Intent.ACTION_PICK,
                     MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                    //using the intent launcher created above launch the pick intent
+                    openGalleryLauncher.launch(pickIntent)
                 }else{//Make manifest to import android library instead of java
-                    //Todo : Displaying another toast if permission is not granted and this time focus on
+                    //Displaying another toast if permission is not granted and this time focus on
                     //    Read external storage
                     if(permissionName == Manifest.permission.READ_EXTERNAL_STORAGE)//if the permission is not granted
                     {
