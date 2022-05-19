@@ -2,9 +2,12 @@ package com.example.drawme
 
 import android.Manifest
 import android.app.Dialog
+import android.content.Intent
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.View
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
@@ -20,7 +23,18 @@ class MainActivity : AppCompatActivity() {
     private var drawingView: DrawingView? = null
     private var mImageButtonCurrentPaint: ImageButton? = null
 
-    /** Todo 2: create an ActivityResultLauncher with MultiplePermissions since we are requesting
+    val openGalleryLauncher: ActivityResultLauncher<Intent> =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()){//registerForActivityResult gives us the data
+            result ->
+            if(result.resultCode == RESULT_OK && result.data!=null){
+                val imageBackground: ImageView = findViewById(R.id.iv_background) // to get the image to the main view
+
+                imageBackground.setImageURI(result.data?.data)
+            }
+        }
+
+
+    /** Todo : create an ActivityResultLauncher with MultiplePermissions since we are requesting
      * both read and write
      */
 
@@ -32,12 +46,16 @@ class MainActivity : AppCompatActivity() {
                 val permissionName = it.key //this will be of type string
                 val isGranted = it.value// this will be of type bool
 
-                //Todo 3: if permission is granted show a toast and perform operation
+                //Todo : if permission is granted show a toast and perform operation
 
                 if(isGranted){ //if the permission is granted
                     Toast.makeText(this@MainActivity," Permission granted, now you can read from file storage.", Toast.LENGTH_LONG).show()
+
+
+                    val pickIntent = Intent(Intent.ACTION_PICK,
+                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
                 }else{//Make manifest to import android library instead of java
-                    //Todo 4: Displaying another toast if permission is not granted and this time focus on
+                    //Todo : Displaying another toast if permission is not granted and this time focus on
                     //    Read external storage
                     if(permissionName == Manifest.permission.READ_EXTERNAL_STORAGE)//if the permission is not granted
                     {
