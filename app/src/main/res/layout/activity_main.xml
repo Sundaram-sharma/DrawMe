@@ -133,7 +133,7 @@
         app:layout_constraintEnd_toEndOf="parent">
 
         <ImageButton
-            android:id="@+id/gallery"
+            android:id="@+id/ib_gallery"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_margin="5dp"

@@ -3,6 +3,7 @@ package com.example.drawme
 import android.Manifest
 import android.app.Activity
 import android.app.Dialog
+import android.media.Image
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -14,6 +15,7 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.get
 
@@ -26,14 +28,17 @@ class MainActivity : AppCompatActivity() {
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()){
             permission -> //types of permission
             permission.entries.forEach{
-                val permissionName = it.key
-                val isGranted = it.value
+                //mutable mapping
+                val permissionName = it.key //this will be of type string
+                val isGranted = it.value// this will be of type bool
 
-                if(isGranted){
+                if(isGranted){ //if the permission is granted
                     Toast.makeText(this@MainActivity," Permission granted, now you can read from file storage.", Toast.LENGTH_LONG).show()
                 }else{//Make manifest to import android library instead of java
-                    if(permissionName == Manifest.permission.READ_EXTERNAL_STORAGE){
-
+                    if(permissionName == Manifest.permission.READ_EXTERNAL_STORAGE)//if the permission is not granted
+                    {
+                        Toast.makeText(this@MainActivity,"Oops you just denied the permission",Toast.LENGTH_LONG
+                        ).show()
                     }
                 }
             }
@@ -52,10 +57,17 @@ class MainActivity : AppCompatActivity() {
         mImageButtonCurrentPaint!!.setImageDrawable(// when we please a color in the pallet
             ContextCompat.getDrawable(this,R.drawable.pallet_pressed)
         )
-        val ib_brush : ImageButton = findViewById(R.id.ib_brush)
+        val ib_brush : ImageButton = findViewById(R.id.ib_brush) //data
         ib_brush.setOnClickListener {
             showBrushSizeChooserDialog()
         }
+        val ibGallery : ImageButton = findViewById(R.id.ib_gallery) //when we clikc on gallery icon, the inside functions will launch
+        ibGallery.setOnClickListener{
+
+            requestStoragePermission()
+
+        }
+
     }
 
     fun paintClicked(view: View) {
@@ -74,7 +86,16 @@ class MainActivity : AppCompatActivity() {
                 mImageButtonCurrentPaint = view // making current
             }
     }
+        private fun requestStoragePermission(){
 
+            if(ActivityCompat.shouldShowRequestPermissionRationale( //function speaks for itself =D
+                    this,
+                    Manifest.permission.READ_EXTERNAL_STORAGE)
+            ){
+                showDialog()
+            }
+
+        }
 
     /**
      * Method is used to launch the dialog to select different brush sizes.
