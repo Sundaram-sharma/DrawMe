@@ -1,20 +1,16 @@
 package com.example.drawme
 
 import android.Manifest
-import android.app.Activity
 import android.app.Dialog
-import android.media.Image
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.Toast
-import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.get
@@ -86,30 +82,7 @@ class MainActivity : AppCompatActivity() {
                 mImageButtonCurrentPaint = view // making current
             }
     }
-    private fun requestStoragePermission(){
-        //Todo 6: Check if the permission was denied and show rationale
-        if (
-            ActivityCompat.shouldShowRequestPermissionRationale(
-                this,
-                Manifest.permission.READ_EXTERNAL_STORAGE)
-        ){
-            //Todo 9: call the rationale dialog to tell the user why they need to allow permission request
-            showRationaleDialog("Kids Drawing App","Kids Drawing App " +
-                    "needs to Access Your External Storage")
-        }
-        else {
-            // You can directly ask for the permission.
-            // Todo 7: if it has not been denied then request for permission
-            //  The registered ActivityResultCallback gets the result of this request.
-            requestPermission.launch(
-                arrayOf(
-                    Manifest.permission.READ_EXTERNAL_STORAGE,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE
-                )
-            )
-        }
 
-    }
 
     /**
      * Method is used to launch the dialog to select different brush sizes.
@@ -139,5 +112,30 @@ class MainActivity : AppCompatActivity() {
         brushDialog.show() //show the brush dialog
     }
 
+    private fun requestStoragePermission(){
+        //Todo 6: Check if the permission was denied and show rationale
+        if (
+            ActivityCompat.shouldShowRequestPermissionRationale(
+                this,
+                Manifest.permission.READ_EXTERNAL_STORAGE)
+        ){
+            //Todo 9: call the rationale dialog to tell the user why they need to allow permission request
+            showRationaleDialog("Kids Drawing App","Kids Drawing App " +
+                    "needs to Access Your External Storage")
+        }
+        else {
+            // You can directly ask for the permission.
+            // Todo 7: if it has not been denied then request for permission
+
+            //  The registered ActivityResultCallback gets the result of this request.
+            requestPermission.launch(
+                arrayOf(
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+                )
+            )
+        }
+
+    }
 
 }
