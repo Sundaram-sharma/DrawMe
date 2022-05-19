@@ -17,8 +17,10 @@ class DrawingView(context: Context, attr: AttributeSet): View(context, attr) {
     private var mBrushSize: Float = 0.toFloat() // A variable for stroke/brush size to draw on the canvas.
     private var color = Color.BLACK // A variable to hold a color of the stroke.
     private var canvas: Canvas? = null
+
     private val mPaths = ArrayList<CustomPath>() // to retain the path we draw
     private val mUndoPaths = ArrayList<CustomPath>() // to retain the undo paths
+    //private val mRedoPaths = ArrayList<CustomPath>() // to retain the redo paths
 
 
     init {
@@ -35,8 +37,18 @@ class DrawingView(context: Context, attr: AttributeSet): View(context, attr) {
 
             //Generally, invalidate() means 'redraw on screen' and results to a call of the view's onDraw() method. So if something changes and it needs to be reflected on screen, you need to call invalidate().
 
-            invalidate() //redraw the entire page
+            invalidate() //redraw the entire page with remaining lines
         }
+    }
+
+    fun onClickRedo(){
+        if(mUndoPaths.size > 0) // only if the path exist then proceed
+        {       //Only mPath can draw on screen
+            mPaths.add(mUndoPaths.removeAt(mUndoPaths.size - 1)) //add the removed path to mRedoPath from mUndoPath starting from last in array (FILO)
+            invalidate()
+
+    }
+
     }
 
 
@@ -118,7 +130,7 @@ class DrawingView(context: Context, attr: AttributeSet): View(context, attr) {
                 mDrawPath!!.lineTo(touchx!!, touchy!!)
             }
             MotionEvent.ACTION_UP ->{ // when we stop touching the screen or pressure gesture is finished
-                mPaths.add(mDrawPath!!) //
+                mPaths.add(mDrawPath!!) // this will start the drawing
                 mDrawPath = CustomPath(color, mBrushSize)
             }
 
@@ -151,7 +163,7 @@ class DrawingView(context: Context, attr: AttributeSet): View(context, attr) {
      */
 
 
-    internal inner class CustomPath(var color: Int, var brushThickness: Float) : Path(){
+    internal inner class CustomPath(var color: Int, var brushThickness: Float) : Path() {
 
 
 

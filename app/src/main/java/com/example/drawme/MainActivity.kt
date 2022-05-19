@@ -79,7 +79,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         drawingView = findViewById(R.id.drawing_view)
-        drawingView?.setSizeForBrush(20.toFloat())
+        drawingView?.setSizeForBrush(10.toFloat()) //Default Size is 20
 
         val linearLayoutPaintColors = findViewById<LinearLayout>(R.id.ll_paint_colors) //the linear layout where the color pillet will be
 
@@ -91,17 +91,23 @@ class MainActivity : AppCompatActivity() {
         ib_brush.setOnClickListener {
             showBrushSizeChooserDialog()
         }
-        val ibGallery : ImageButton = findViewById(R.id.ib_gallery) //when we clikc on gallery icon, the inside functions will launch
-        ibGallery.setOnClickListener{
+        val ib_Gallery : ImageButton = findViewById(R.id.ib_gallery) //when we clikc on gallery icon, the inside functions will launch
+        ib_Gallery.setOnClickListener{
 
             requestStoragePermission()
 
         }
 
-        val ibUndo : ImageButton = findViewById(R.id.ib_undo) //when clicked, it will undo the previous work
-        ibUndo.setOnClickListener{
+        val ib_Undo : ImageButton = findViewById(R.id.ib_undo) //when clicked, it will undo the previous work
+        ib_Undo.setOnClickListener{
             drawingView?.onClickUndo() //calling the function from DrawingView class (nullable)
         }
+
+        val ib_Redo : ImageButton = findViewById(R.id.ib_redo) //when clicked, it will Redo the Undo work
+        ib_Redo.setOnClickListener{
+            drawingView?.onClickRedo() //calling the function from DrawingView class (nullable)
+        }
+
 
     }
 
