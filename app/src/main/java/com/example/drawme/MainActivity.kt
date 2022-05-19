@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-    /** Todo : create an ActivityResultLauncher with MultiplePermissions since we are requesting
+    /** create an ActivityResultLauncher with MultiplePermissions since we are requesting
      * both read and write
      */
 
@@ -96,6 +96,11 @@ class MainActivity : AppCompatActivity() {
 
             requestStoragePermission()
 
+        }
+
+        val ibUndo : ImageButton = findViewById(R.id.ib_undo) //when clicked, it will undo the previous work
+        ibGallery.setOnClickListener{
+            drawingView?.onClickUndo() //calling the function from DrawingView class (nullable)
         }
 
     }

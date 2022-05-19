@@ -17,11 +17,30 @@ class DrawingView(context: Context, attr: AttributeSet): View(context, attr) {
     private var mBrushSize: Float = 0.toFloat() // A variable for stroke/brush size to draw on the canvas.
     private var color = Color.BLACK // A variable to hold a color of the stroke.
     private var canvas: Canvas? = null
-    private val mPath = ArrayList<CustomPath>() // to retain the path we draw
+    private val mPaths = ArrayList<CustomPath>() // to retain the path we draw
+    private val mUndoPaths = ArrayList<CustomPath>() // to retain the undo paths
+
 
     init {
         setUpDrawing() //code inside init will be
     }
+
+
+    //Delete path from mPath and store the undo path in mUndoPath
+
+    fun onClickUndo(){
+        if(mPaths.size > 0) // only if the path exist then proceed
+        {
+            mUndoPaths.add(mPaths.removeAt(mPaths.size - 1)) //add the removed path to mUndoPath from mPath starting from last in array (FILO)
+
+            //Generally, invalidate() means 'redraw on screen' and results to a call of the view's onDraw() method. So if something changes and it needs to be reflected on screen, you need to call invalidate().
+
+            invalidate() //redraw the entire page
+        }
+    }
+
+
+
     /**
      * This method initializes the attributes of the
      * ViewForDrawing class.
@@ -66,7 +85,7 @@ class DrawingView(context: Context, attr: AttributeSet): View(context, attr) {
          */
         canvas.drawBitmap(mCanvasBitmap!!, 0f, 0f,mCanvasPaint)
 
-        for(path in mPath){ //
+        for(path in mPaths){ //
             mDrawPaint!!.strokeWidth = path.brushThickness
             mDrawPaint!!.color = path.color
             canvas.drawPath(path, mDrawPaint!!)
@@ -99,7 +118,7 @@ class DrawingView(context: Context, attr: AttributeSet): View(context, attr) {
                 mDrawPath!!.lineTo(touchx!!, touchy!!)
             }
             MotionEvent.ACTION_UP ->{ // when we stop touching the screen or pressure gesture is finished
-                mPath.add(mDrawPath!!) //
+                mPaths.add(mDrawPath!!) //
                 mDrawPath = CustomPath(color, mBrushSize)
             }
 
