@@ -20,6 +20,10 @@ class MainActivity : AppCompatActivity() {
     private var drawingView: DrawingView? = null
     private var mImageButtonCurrentPaint: ImageButton? = null
 
+    /** Todo 2: create an ActivityResultLauncher with MultiplePermissions since we are requesting
+     * both read and write
+     */
+
     val requestPermission: ActivityResultLauncher<Array<String>> =
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()){
             permission -> //types of permission
@@ -28,9 +32,13 @@ class MainActivity : AppCompatActivity() {
                 val permissionName = it.key //this will be of type string
                 val isGranted = it.value// this will be of type bool
 
+                //Todo 3: if permission is granted show a toast and perform operation
+
                 if(isGranted){ //if the permission is granted
                     Toast.makeText(this@MainActivity," Permission granted, now you can read from file storage.", Toast.LENGTH_LONG).show()
                 }else{//Make manifest to import android library instead of java
+                    //Todo 4: Displaying another toast if permission is not granted and this time focus on
+                    //    Read external storage
                     if(permissionName == Manifest.permission.READ_EXTERNAL_STORAGE)//if the permission is not granted
                     {
                         Toast.makeText(this@MainActivity,"Oops you just denied the permission",Toast.LENGTH_LONG
@@ -111,6 +119,8 @@ class MainActivity : AppCompatActivity() {
 
         brushDialog.show()    //show the brush dialog
     }
+
+    //Todo 5: create a method to requestStorage permission
 
     private fun requestStoragePermission(){
         //Todo 6: Check if the permission was denied and show rationale
