@@ -109,7 +109,7 @@ class MainActivity : AppCompatActivity() {
             brushDialog.dismiss() // close the dialog
         }
 
-        brushDialog.show() //show the brush dialog
+        brushDialog.show()    //show the brush dialog
     }
 
     private fun requestStoragePermission(){
