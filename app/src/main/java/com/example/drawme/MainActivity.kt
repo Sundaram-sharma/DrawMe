@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity() {
                     val pickIntent = Intent(Intent.ACTION_PICK,
                     MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
                     //using the intent launcher created above launch the pick intent
-                    openGalleryLauncher.launch(pickIntent)
+                    openGalleryLauncher.launch(pickIntent) //open the gallery after clicking ib_galery button
                 }else{//Make manifest to import android library instead of java
                     //Displaying another toast if permission is not granted and this time focus on
                     //    Read external storage
