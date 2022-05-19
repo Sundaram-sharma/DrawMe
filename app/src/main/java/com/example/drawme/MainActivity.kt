@@ -23,12 +23,16 @@ class MainActivity : AppCompatActivity() {
     private var drawingView: DrawingView? = null
     private var mImageButtonCurrentPaint: ImageButton? = null
 
+    //create an activity result launcher to open an intent
     val openGalleryLauncher: ActivityResultLauncher<Intent> =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()){//registerForActivityResult gives us the data
             result ->
+            //get the returned result from the lambda and check the resultcode and the data returned
             if(result.resultCode == RESULT_OK && result.data!=null){
+                //process the data
+                //if the data is not null reference the imageView from the layout
                 val imageBackground: ImageView = findViewById(R.id.iv_background) // to get the image to the main view
-
+                //set the imageuri received
                 imageBackground.setImageURI(result.data?.data)
             }
         }
@@ -138,22 +142,22 @@ class MainActivity : AppCompatActivity() {
         brushDialog.show()    //show the brush dialog
     }
 
-    //Todo 5: create a method to requestStorage permission
+    //create a method to requestStorage permission
 
     private fun requestStoragePermission(){
-        //Todo 6: Check if the permission was denied and show rationale
+        // Check if the permission was denied and show rationale
         if (
             ActivityCompat.shouldShowRequestPermissionRationale(
                 this,
                 Manifest.permission.READ_EXTERNAL_STORAGE)
         ){
-            //Todo 9: call the rationale dialog to tell the user why they need to allow permission request
+            //call the rationale dialog to tell the user why they need to allow permission request
             showRationaleDialog("Kids Drawing App","Kids Drawing App " +
                     "needs to Access Your External Storage")
         }
         else {
             // You can directly ask for the permission.
-            // Todo 7: if it has not been denied then request for permission
+            //if it has not been denied then request for permission
 
             //  The registered ActivityResultCallback gets the result of this request.
             requestPermission.launch(
