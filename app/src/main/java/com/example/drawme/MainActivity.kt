@@ -7,6 +7,7 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
+import android.media.MediaScannerConnection
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
@@ -272,7 +273,7 @@ class MainActivity : AppCompatActivity() {
                              if(result.isNotEmpty()) //saved successfully on the result
                              {
                                  Toast.makeText(this@MainActivity,"File saved successfully :$result",Toast.LENGTH_SHORT).show()
-
+                                shareImage(result) // switch to share image function
                              }
                          }
                      }catch (e: Exception){
@@ -304,6 +305,37 @@ class MainActivity : AppCompatActivity() {
             customProgressDialog?.dismiss() //to remove the progress bar
             customProgressDialog = null // to make sure the progress bar is null at next time
         }
+    }
+
+    //function to share the image
+    private fun shareImage(result: String){
+
+        /*MediaScannerConnection provides a way for applications to pass a
+     newly created or downloaded media file to the media scanner service.
+     The media scanner service will read metadata from the file and add
+     the file to the media content provider.
+     The MediaScannerConnectionClient provides an interface for the
+     media scanner service to return the Uri for a newly scanned file
+     to the client of the MediaScannerConnection class.*/
+
+        /*scanFile is used to scan the file when the connection is established with MediaScanner.*/
+        MediaScannerConnection.scanFile(this, arrayOf(result), null){
+            path, uri ->
+            // This is used for sharing the image after it has being stored in the storage.
+            val shareIntent = Intent()
+            shareIntent.action = Intent.ACTION_SEND
+            shareIntent.putExtra(Intent.EXTRA_STREAM, uri)
+            // A content: URI holding a stream of data associated with the Intent, used to supply the data being sent.
+            shareIntent.type = "image/png" // The MIME type of the data being handled by this intent.
+            startActivity(Intent.createChooser(shareIntent,"Share"))
+
+            // Activity Action: Display an activity chooser,
+            // allowing the user to pick what they want to before proceeding.
+            // This can be used as an alternative to the standard activity picker
+            // that is displayed by the system when you try to start an activity with multiple possible matches,
+            // with these differences in behavior:
+        }
+
     }
 
 }
