@@ -2,7 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.drawme">
 
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/><!-- take permission from user to read from external storage-->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/> <!-- take permission from user to write on external storage-->
     
     <application
         android:allowBackup="true"
@@ -21,6 +22,40 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!--Provider = Declares a content provider component. A content provider is a subclass of ContentProvider
+        that supplies structured access to data managed by the application.
+        All content providers in your application must be defined in a <provider> element in the manifest file;
+        therwise, the system is unaware of them and doesn't run them
+
+      android:exported
+        Whether the content provider is available for other applications to use:
+        true: The provider is available to other applications. Any application can use the provider's content URI to access it,
+        subject to the permissions specified for the provider.
+        false: The provider is not available to other applications. Set android:exported="false" to limit access to the provider to your applications.
+        Only applications that have the same user ID (UID) as the provider, or applications that have been temporarily
+        granted access to the provider through the android:grantUriPermissions element, have access to it.
+
+        android:grantUriPermissions
+        Whether or not those who ordinarily would not have permission to access the content provider's data can be granted permission to do so,
+        temporarily overcoming the restriction imposed by the readPermission, writePermission, permission, and exported attributes — "true" if
+        permission can be granted, and "false" if not. If "true", permission can be granted to any of the content provider's data.
+        If "false", permission can be granted only to the data subsets listed in <grant-uri-permission> subelements, if any.
+        The default value is "false".
+        -->
+
+        <provider
+            android:authorities="com.example.drawme.DrawingView/fileprovider"
+            android:name="androidx.core.content.FileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <!--Get the file from the xml folder-->
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/path"/>
+
+
+        </provider>
     </application>
 
 </manifest>

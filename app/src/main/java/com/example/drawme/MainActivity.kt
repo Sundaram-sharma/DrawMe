@@ -3,13 +3,14 @@ package com.example.drawme
 import android.Manifest
 import android.app.Dialog
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.Color
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.Toast
+import android.widget.*
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
@@ -17,6 +18,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.get
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.io.ByteArrayInputStream
+import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.FileOutputStream
+import java.lang.Exception
 
 class MainActivity : AppCompatActivity() {
 
@@ -108,6 +118,20 @@ class MainActivity : AppCompatActivity() {
             drawingView?.onClickRedo() //calling the function from DrawingView class (nullable)
         }
 
+        val ib_Save : ImageButton = findViewById(R.id.ib_save) //when clicked, it will save the image
+        ib_Save.setOnClickListener{
+            //user permission is needed to take permission to write the file on the disk
+
+            if(isReadStorageAllowed()){
+                lifecycleScope.launch{
+                    val flDrawingView: FrameLayout = findViewById(R.id.fl_drawing_view_container)//tahes the whole framelayout
+                    //val myBitmap = Bitmap = getBitmapFromView(flDrawingView)
+                    saveBitmapFile(getBitmapFromView(flDrawingView)) //did the same as above line
+                }
+            }
+
+        }
+
 
     }
 
@@ -185,6 +209,14 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    private fun isReadStorageAllowed(): Boolean{
+        //check if the user permission is granted
+        val result = ContextCompat.checkSelfPermission(this,Manifest.permission.READ_EXTERNAL_STORAGE)
+
+        //return if the permission is granted
+        return result == PackageManager.PERMISSION_GRANTED
+    }
+
     private fun showRationaleDialog(
         title: String,
         message: String,
@@ -196,6 +228,57 @@ class MainActivity : AppCompatActivity() {
                 dialog.dismiss()
             }
         builder.create().show()
+    }
+
+    private fun getBitmapFromView(view: View): Bitmap{ //create a function which takes view in parameter and returns bitmap
+        val returnedBitmap = Bitmap.createBitmap(view.width, view.height, Bitmap.Config.ARGB_8888)//takes view width and height and ARBG and opacity
+        val canvas = Canvas(returnedBitmap)//Construct a canvas with the specified bitmap to draw into
+        val bgDrawable = view.background // takes the background that we defined in the view
+        if(bgDrawable != null ){
+            bgDrawable.draw(canvas) // if custom background provided then draw the current 'canvas as well'
+
+        }else{
+            canvas.drawColor(Color.WHITE) //if no background then provide the canvas with white color
+        }
+        view.draw(canvas)//view the canvas final
+        return returnedBitmap
+
+    }
+        //we need to add dependencies in gradle to implement coroutines
+    private suspend fun saveBitmapFile (mBitmap: Bitmap) : String{
+        var result =""
+            //defined the name of the thread
+            withContext(Dispatchers.IO){
+                if(mBitmap != null ){// run only when mBitmap have something
+                     try {
+                         val bytes = ByteArrayOutputStream()
+                         //fun compress the bitmap to the specified quality in the parameter
+                         mBitmap.compress(Bitmap.CompressFormat.PNG, 90, bytes)
+
+                         //Name and path(location) of the file
+                         val f = File(externalCacheDir?.absoluteFile.toString()+File.separator+"DrawMe_"+System.currentTimeMillis()/1000+".png")
+
+                         val fo = FileOutputStream(f) //creating the File Output stream
+                         fo.write(bytes.toByteArray()) // writing something on it
+                         fo.close() //closing the FO stream
+
+                         result = f.absolutePath //return is the path of the file
+
+                         runOnUiThread{
+                             if(result.isNotEmpty()) //saved successfully on the result
+                             {
+                                 Toast.makeText(this@MainActivity,"File saved successfully :$result",Toast.LENGTH_SHORT).show()
+
+                             }
+                         }
+                     }catch (e: Exception){
+                         result = ""
+                         e.printStackTrace()
+                     }
+                }
+
+            }
+            return result //return is the path of the file
     }
 
 }
