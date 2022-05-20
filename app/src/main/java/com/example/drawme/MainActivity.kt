@@ -33,6 +33,7 @@ class MainActivity : AppCompatActivity() {
     private var drawingView: DrawingView? = null
     private var mImageButtonCurrentPaint: ImageButton? = null
 
+    var customProgressDialog : Dialog? = null
     //create an activity result launcher to open an intent
     val openGalleryLauncher: ActivityResultLauncher<Intent> =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()){//registerForActivityResult gives us the data
@@ -123,6 +124,7 @@ class MainActivity : AppCompatActivity() {
             //user permission is needed to take permission to write the file on the disk
 
             if(isReadStorageAllowed()){
+                showProgressDialog()//show progress dialog when read permission is granted
                 lifecycleScope.launch{
                     val flDrawingView: FrameLayout = findViewById(R.id.fl_drawing_view_container)//tahes the whole framelayout
                     //val myBitmap = Bitmap = getBitmapFromView(flDrawingView)
@@ -265,6 +267,8 @@ class MainActivity : AppCompatActivity() {
                          result = f.absolutePath //return is the path of the file
 
                          runOnUiThread{
+
+                             cancelProgressDialog() // this will close the progress bar when store is completed and user get toast message
                              if(result.isNotEmpty()) //saved successfully on the result
                              {
                                  Toast.makeText(this@MainActivity,"File saved successfully :$result",Toast.LENGTH_SHORT).show()
@@ -279,6 +283,27 @@ class MainActivity : AppCompatActivity() {
 
             }
             return result //return is the path of the file
+    }
+
+    //Method is used to show the custom progress dialog
+
+    public fun showProgressDialog(){
+        customProgressDialog = Dialog(this@MainActivity)
+
+        //Set the screen content  from a layout resource
+        //The resource  will be inflated, adding all top-level views to the screen
+
+        customProgressDialog?.setContentView(R.layout.dialog_custom_progress)
+
+        //Start the dialog and display it on screen
+        customProgressDialog?.show()
+    }
+
+    private fun cancelProgressDialog(){
+        if(customProgressDialog != null){
+            customProgressDialog?.dismiss() //to remove the progress bar
+            customProgressDialog = null // to make sure the progress bar is null at next time
+        }
     }
 
 }
