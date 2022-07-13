@@ -1,5 +1,5 @@
 
-# Project Title
+# DrawMe
 
 DrawMe is an android Application which can be used to draw images on the screen. We can also pic any custom image from the phone and place it on the screen to draw on
 
