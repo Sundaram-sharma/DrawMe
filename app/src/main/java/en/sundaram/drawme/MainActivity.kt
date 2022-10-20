@@ -1,4 +1,4 @@
-package com.example.drawme
+package en.sundaram.drawme
 
 import android.Manifest
 import android.app.Dialog
@@ -23,7 +23,6 @@ import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
@@ -99,7 +98,7 @@ class MainActivity : AppCompatActivity() {
 
         mImageButtonCurrentPaint = linearLayoutPaintColors[0] as ImageButton // we need to use the item at position one in the color pallet of linear layout
         mImageButtonCurrentPaint!!.setImageDrawable(// when we please a color in the pallet
-            ContextCompat.getDrawable(this,R.drawable.pallet_pressed)
+            ContextCompat.getDrawable(this, R.drawable.pallet_pressed)
         )
         val ib_brush : ImageButton = findViewById(R.id.ib_brush) //data
         ib_brush.setOnClickListener {
@@ -147,11 +146,11 @@ class MainActivity : AppCompatActivity() {
                 drawingView?.setColor(colorTag) //passing colorTag as a parameter to select color from drawingView
 
                 imageButton.setImageDrawable(// making the current button pressed
-                    ContextCompat.getDrawable(this,R.drawable.pallet_pressed)
+                    ContextCompat.getDrawable(this, R.drawable.pallet_pressed)
                 )
 
                 mImageButtonCurrentPaint?.setImageDrawable(// making the unselected button normal
-                    ContextCompat.getDrawable(this,R.drawable.pallet_normal)
+                    ContextCompat.getDrawable(this, R.drawable.pallet_normal)
                 )
                 mImageButtonCurrentPaint = view // making current
             }

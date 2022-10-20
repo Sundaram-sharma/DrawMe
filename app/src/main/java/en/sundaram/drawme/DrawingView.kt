@@ -1,4 +1,4 @@
-package com.example.drawme
+package en.sundaram.drawme
 
 import android.content.Context
 import android.graphics.*
@@ -6,7 +6,6 @@ import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.MotionEvent
 import android.view.View
-import android.widget.Toast
 
 class DrawingView(context: Context, attr: AttributeSet): View(context, attr) {
 

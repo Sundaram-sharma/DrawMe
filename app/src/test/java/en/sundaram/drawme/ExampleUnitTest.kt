@@ -1,4 +1,4 @@
-package com.example.drawme
+package en.sundaram.drawme
 
 import org.junit.Test
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.drawme">
+    package="en.sundaram.drawme">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/><!-- take permission from user to read from external storage-->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/> <!-- take permission from user to write on external storage-->
@@ -14,7 +14,7 @@
         android:theme="@style/Theme.DrawMe">
         <activity
             android:screenOrientation="portrait"
-            android:name=".MainActivity"
+            android:name="en.sundaram.drawme.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

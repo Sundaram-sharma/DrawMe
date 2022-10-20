@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context="en.sundaram.drawme.MainActivity">
 
     <FrameLayout
         android:id="@+id/fl_drawing_view_container"
@@ -27,7 +27,7 @@
             android:contentDescription="image"
             android:scaleType="centerCrop" />
 
-        <com.example.drawme.DrawingView
+        <en.sundaram.drawme.DrawingView
             android:id="@+id/drawing_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

@@ -1,4 +1,4 @@
-package com.example.drawme
+package en.sundaram.drawme
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
