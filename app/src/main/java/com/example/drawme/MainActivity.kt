@@ -90,6 +90,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        supportActionBar?.hide() //Remove the action bar
+
         drawingView = findViewById(R.id.drawing_view)
         drawingView?.setSizeForBrush(10.toFloat()) //Default Size is 20
 
